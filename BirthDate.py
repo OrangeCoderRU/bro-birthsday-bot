@@ -15,7 +15,7 @@ def get_message_birth():
     message_string = ""
     for dates in list_of_birth:
         # timestamp = (dates[1].month - today.month) + (dates[1].day - today.day)
-        timestamp = (today - dates[1]).days - today.year * 365
+        timestamp = (today - dates[1]).days - dates[1].year * 365
         if timestamp == 0:
             message_string += f"\nСегодня день рождения у {dates[0]}!!!\nЕму {today.year - dates[1].year}!"
         elif timestamp in range(1, 14):
