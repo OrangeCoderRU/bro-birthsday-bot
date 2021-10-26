@@ -7,7 +7,7 @@ bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
-    bot.send_message(message.chat.id, "Вас приветствует Bro Birthday Bot - бот оповещения о днях рождения ваших бро")
+    bot.send_message(message.chat.id, "Вас приветствует Bro Birthday Bot - бот хранящий инфу о днях рождения ваших бро")
 
 
 @bot.message_handler(commands=['check_birth'])

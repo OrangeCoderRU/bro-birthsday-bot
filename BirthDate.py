@@ -2,9 +2,10 @@ import datetime
 
 list_of_birth = [["Fedor", datetime.datetime(1998, month=10, day=20)],
                  ["Bogdan", datetime.datetime(1998, month=10, day=12)],
-                 ["test", datetime.datetime(1998, month=10, day=26)],
+                 ["Artur", datetime.datetime(1998, month=9, day=10)],
                  ["Max", datetime.datetime(1998, month=5, day=3)],
-                 ["Nikita Lameev", datetime.datetime(1999, month=1, day=14)]
+                 ["Nikita Lameev", datetime.datetime(1999, month=1, day=14)],
+                 ["Ruslan", datetime.datetime(1998, month=7, day=31)]
 
                  ]
 today = datetime.datetime.now()
