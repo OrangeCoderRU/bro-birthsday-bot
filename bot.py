@@ -23,7 +23,7 @@ def all_birth(message):
 @bot.message_handler(commands=['help'])
 def help(message):
     bot.send_message(message.chat.id,
-                     "Доступные команды: \n \n/all - все дни рождения\n/check_birth - Дни рождения +- 14 дней\n/help - помощь\nstart - старт")
+                     "Доступные команды: \n \n/all - все дни рождения\n/check_birth - Дни рождения +- 14 дней\n/help - помощь\n")
 
 
 bot.infinity_polling()
