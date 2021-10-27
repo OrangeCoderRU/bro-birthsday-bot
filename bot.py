@@ -15,4 +15,15 @@ def birth_message(message):
     bot.send_message(message.chat.id, f"Дни рождения в этом месяце: \n \n{BirthDate.get_message_birth()}")
 
 
+@bot.message_handler(commands=['all'])
+def all_birth(message):
+    bot.send_message(message.chat.id, BirthDate.get_all_birth())
+
+
+@bot.message_handler(commands=['help'])
+def help(message):
+    bot.send_message(message.chat.id,
+                     "Доступные команды: \n \n/all - все дни рождения\n/check_birth - Дни рождения +- 14 дней\n/help - помощь\nstart - старт")
+
+
 bot.infinity_polling()
