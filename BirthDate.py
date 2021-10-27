@@ -1,15 +1,19 @@
 import datetime
 
 list_of_birth = [
-    ["Fedor", datetime.datetime(1998, month=10, day=20)],
-    ["Bogdan", datetime.datetime(1998, month=10, day=12)],
-    ["Artur", datetime.datetime(1998, month=9, day=10)],
-    ["Max", datetime.datetime(1998, month=5, day=3)],
-    ["Nikita Lameev", datetime.datetime(1999, month=1, day=14)],
-    ["Ruslan", datetime.datetime(1998, month=7, day=31)],
-    ["Nikita Gorbachev", datetime.datetime(2000, month=7, day=11)]
+    ["Федор", datetime.datetime(1998, month=10, day=20)],
+    ["Богдан", datetime.datetime(1998, month=10, day=12)],
+    ["Артур", datetime.datetime(1998, month=9, day=10)],
+    ["Максим", datetime.datetime(1998, month=5, day=3)],
+    ["Никита Ламеев", datetime.datetime(1999, month=1, day=14)],
+    ["Руслан", datetime.datetime(1998, month=7, day=31)],
+    ["Никита Горбачев", datetime.datetime(2000, month=7, day=11)]
 ]
 today = datetime.datetime.now()
+
+
+def to_up_date(list_birth):
+    return today - list_birth[1]
 
 
 def get_message_birth():
@@ -29,7 +33,11 @@ def get_message_birth():
 
 def get_all_birth():
     message_string = "Все др ваших братишек:\n"
-    for dates in list_of_birth:
-        message_string += f"{dates[0]} - {dates[1].day}.{dates[1].month}.{dates[1].year}\n"
+
+    for dates in sorted(list_of_birth, key=to_up_date):
+        if sorted(list_of_birth, key=to_up_date).index(dates) == 0:
+            message_string += f"\n Ближайший др: {dates[0]} - {dates[1].day}.{dates[1].month}.{dates[1].year}\n"
+        else:
+            message_string += f"{dates[0]} - {dates[1].day}.{dates[1].month}.{dates[1].year}\n"
 
     return message_string
