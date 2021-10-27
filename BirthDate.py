@@ -30,6 +30,6 @@ def get_message_birth():
 def get_all_birth():
     message_string = "Все др ваших братишек:\n"
     for dates in list_of_birth:
-        message_string += f"{dates[0]} - {dates[1].day}.{dates[1].month}.{dates[1].day}"
+        message_string += f"{dates[0]} - {dates[1].day}.{dates[1].month}.{dates[1].year}\n"
 
     return message_string
