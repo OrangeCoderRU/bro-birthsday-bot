@@ -13,7 +13,7 @@ today = datetime.datetime.now()
 
 
 def to_up_date(list_birth):
-    return today - list_birth[1]
+    return today.month - list_birth[1].month, today.day - list_birth[1].day
 
 
 def get_message_birth():
@@ -33,11 +33,12 @@ def get_message_birth():
 
 def get_all_birth():
     message_string = "Все др ваших братишек:\n"
-
-    for dates in sorted(list_of_birth, key=to_up_date):
-        if sorted(list_of_birth, key=to_up_date).index(dates) == 0:
-            message_string += f"\n Ближайший др: {dates[0]} - {dates[1].day}.{dates[1].month}.{dates[1].year}\n"
+    i = 0
+    for dates in sorted(list_of_birth, key=to_up_date, reverse=True):
+        if i == 0:
+            message_string += f"\nБлижайший др - {dates[0]} - {dates[1].day}.{dates[1].month}.{dates[1].year}\n\n"
         else:
             message_string += f"{dates[0]} - {dates[1].day}.{dates[1].month}.{dates[1].year}\n"
+        i += 1
 
     return message_string
