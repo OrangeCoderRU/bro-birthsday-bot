@@ -8,11 +8,16 @@ bot = telebot.TeleBot(TOKEN)
 @bot.message_handler(commands=['start'])
 def start_message(message):
     bot.send_message(message.chat.id,
-                     "Вас приветствует Bro Birthday Bot (v0.2) - бот хранящий инфу о днях рождения ваших бро"
-                     "\n\n Changelog:"
+                     "Вас приветствует Bro Birthday Bot - бот хранящий инфу о днях рождения ваших бро"
+                     "\n\nChangelog:"
+                     "\n(v0.2)"
                      "\n- добавлена сортировка по возрастанию относительно текущей даты для команды /all"
                      "\n- добавлено акцентирование внимания на ближайшем др в команде /all"
-                     "\n- произведена русификация имен")
+                     "\n- произведена русификация имен"
+                     "\n\n(v0.3)"
+                     "\n- мониторинг др командой /check_birth увеличен до 31 одного дня (в рамках одного месяца)"
+                     "\n- добавлена сортировка по возрастанию для команды /check_birth"
+                     "\n- реализован мэппинг номера месяца на слово месяца")
 
 
 @bot.message_handler(commands=['check_birth'])
@@ -28,7 +33,7 @@ def all_birth(message):
 @bot.message_handler(commands=['help'])
 def help(message):
     bot.send_message(message.chat.id,
-                     "Доступные команды: \n \n/all - все дни рождения\n/check_birth - Дни рождения +- 14 дней\n/help - помощь\n")
+                     "Доступные команды: \n \n/all - все дни рождения\n/check_birth - Дни рождения текущего месяца\n/help - помощь\n/start - summary бота и Changelog")
 
 
 bot.infinity_polling()
