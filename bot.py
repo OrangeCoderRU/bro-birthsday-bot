@@ -10,8 +10,8 @@ bot = telebot.TeleBot(TOKEN)
 def start_message(message):
     bot.send_message(message.chat.id,
                      "Вас приветствует Bro Birthday Bot - бот хранящий инфу о днях рождения ваших бро"
-                     "\n\nНаписан на Python, дни рождения хранятся в PostgreSQL для каждого чата отдельно основываясь на связи сhat_id (подробнее в API Telegram)"
-                     "\n\nКстати буду рад звездочкам за костылики в open source - https://github.com/OrangeCoderRU/bro-birthsday-bot)"
+                     "\n\nНаписан на Python, дни рождения хранятся в PostgreSQL для каждого чата отдельно основываясь на связи с сhat_id (подробнее в API Telegram)"
+                     "\n\nКстати, буду рад звездочкам за костылики в open source - https://github.com/OrangeCoderRU/bro-birthsday-bot"
                      "\n\nПопробуй /help, чтобы узнать доступные функции!")
 
 
