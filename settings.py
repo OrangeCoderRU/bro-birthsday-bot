@@ -1,1 +1,4 @@
-TOKEN = "2024563700:AAHhiTzNBUdob0QBxDKiOKyruUdokItPg74"
+import os
+
+
+TOKEN = os.environ['TELEGRAM_API_TOKEN']
