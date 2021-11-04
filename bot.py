@@ -37,8 +37,9 @@ def help(message):
 def create_new_member(message):
     # ToDo валидация сообщения на формат данных
     new_member_adding = bot.send_message(message.chat.id,
-                                         "Введите сообщение формата:\n*Имя*\n*день* *Месяц на английском* *год*")
-    bot.register_next_step_handler(new_member_adding, step_message)
+                                         "Ответье на это сообщение форматом:\n*Имя*\n*день* *Месяц на английском* *год*")
+    bot.register_for_reply(new_member_adding, step_message)
+    # bot.register_next_step_handler(new_member_adding, step_message)
 
 
 def step_message(message):
