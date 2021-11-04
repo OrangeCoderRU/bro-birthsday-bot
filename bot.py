@@ -10,20 +10,13 @@ bot = telebot.TeleBot(TOKEN)
 def start_message(message):
     bot.send_message(message.chat.id,
                      "Вас приветствует Bro Birthday Bot - бот хранящий инфу о днях рождения ваших бро"
-                     "\n\nChangelog:"
-                     "\n(v0.2)"
-                     "\n- добавлена сортировка по возрастанию относительно текущей даты для команды /all"
-                     "\n- добавлено акцентирование внимания на ближайшем др в команде /all"
-                     "\n- произведена русификация имен"
-                     "\n\n(v0.3)"
-                     "\n- мониторинг др командой /check_birth увеличен до 31 одного дня (в рамках одного месяца)"
-                     "\n- добавлена сортировка по возрастанию для команды /check_birth"
-                     "\n- реализован мэппинг номера месяца на слово месяца")
+                     "\n\Написан на Python, дни рождения хранятся в PostgreSQL\n\nПопробуй /help, чтобы узнать доступыне функции!")
 
 
 @bot.message_handler(commands=['check_birth'])
 def birth_message(message):
-    bot.send_message(message.chat.id, f"Дни рождения в этом месяце: \n \n{BirthDate.get_message_birth(message.chat.id)}")
+    bot.send_message(message.chat.id,
+                     f"Дни рождения в этом месяце: \n \n{BirthDate.get_message_birth(message.chat.id)}")
 
 
 @bot.message_handler(commands=['all'])
@@ -40,7 +33,8 @@ def help(message):
 @bot.message_handler(commands=['create_new_member'])
 def create_new_member(message):
     # ToDo валидация сообщения на формат данных
-    new_member_adding = bot.send_message(message.chat.id, "Введите сообщение формата:\n*Имя*\n*день* *Месяц на английском* *год*")
+    new_member_adding = bot.send_message(message.chat.id,
+                                         "Введите сообщение формата:\n*Имя*\n*день* *Месяц на английском* *год*")
     bot.register_next_step_handler(new_member_adding, step_message)
 
 
