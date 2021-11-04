@@ -4,17 +4,6 @@ from db_impl import get_members_for_chat
 from dateutil import parser
 import time
 
-# list_of_birth = [
-#     ["Федор", datetime.datetime(1998, month=10, day=20)],
-#     ["Богдан", datetime.datetime(1998, month=10, day=12)],
-#     ["Артур", datetime.datetime(1998, month=9, day=10)],
-#     ["Максим", datetime.datetime(1998, month=5, day=3)],
-#     ["Никита Ламеев", datetime.datetime(1999, month=1, day=14)],
-#     ["Руслан", datetime.datetime(1998, month=7, day=31)],
-#     ["Никита Горбачев", datetime.datetime(2000, month=7, day=11)],
-#     # ["test user", datetime.datetime(2001, month=10, day=29)]
-# ]
-
 
 def get_birth_from_db(chat_id):
     data = get_members_for_chat(chat_id)
