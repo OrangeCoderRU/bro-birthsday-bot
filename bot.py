@@ -29,7 +29,8 @@ def all_birth(message):
 @bot.message_handler(commands=['help'])
 def help(message):
     bot.send_message(message.chat.id,
-                     "Доступные команды: \n \n/all - все дни рождения\n/check_birth - Дни рождения текущего месяца\n/help - помощь\n/start - summary бота и Changelog")
+                     "Доступные команды: \n \n/all - все дни рождения\n/check_birth - Дни рождения текущего месяца\n"
+                     "/create_new_member - регистрация будущего именинника!\n/help - помощь\n/start - summary бота и Changelog")
 
 
 @bot.message_handler(commands=['create_new_member'])
