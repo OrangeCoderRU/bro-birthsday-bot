@@ -4,7 +4,7 @@ today = datetime.datetime.now()
 
 
 def to_up_date(list_birth):
-    return today.month - list_birth[1].month, today.day - list_birth[1].day
+    return today.month - list_birth[1].tm_mon, today.day - list_birth[1].tm_mday
 
 
 def sort_actual(check_birth):

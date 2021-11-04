@@ -1,6 +1,7 @@
 import BirthDate
 from settings import TOKEN
 import telebot
+from db_impl import set_members_for_chat
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -27,13 +28,29 @@ def birth_message(message):
 
 @bot.message_handler(commands=['all'])
 def all_birth(message):
-    bot.send_message(message.chat.id, BirthDate.get_all_birth())
+    bot.send_message(message.chat.id, BirthDate.get_all_birth(message.chat.id))
 
 
 @bot.message_handler(commands=['help'])
 def help(message):
     bot.send_message(message.chat.id,
                      "Доступные команды: \n \n/all - все дни рождения\n/check_birth - Дни рождения текущего месяца\n/help - помощь\n/start - summary бота и Changelog")
+
+
+@bot.message_handler(commands=['create_new_member'])
+def create_new_member(message):
+    # ToDo валидация сообщения на формат данных
+    new_member_adding = bot.send_message(message.chat.id, "Введите сообщение формата:\n*Имя*\n*01.05.2021*")
+    bot.register_next_step_handler(new_member_adding, step_message)
+
+
+def step_message(message):
+    cid = message.chat.id
+    userInput = message.text
+    list = str(userInput).split("\n")
+    set_members_for_chat(message.chat.id, userInput)
+    bot.send_message(message.chat.id,
+                     f"Вы зарегистрировали пользователя с параметрами:\n Имя: {list[0]}\nДата: {list[1]}")
 
 
 bot.infinity_polling()
