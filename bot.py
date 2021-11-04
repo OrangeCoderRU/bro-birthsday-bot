@@ -10,7 +10,7 @@ bot = telebot.TeleBot(TOKEN)
 def start_message(message):
     bot.send_message(message.chat.id,
                      "Вас приветствует Bro Birthday Bot - бот хранящий инфу о днях рождения ваших бро"
-                     "\n\Написан на Python, дни рождения хранятся в PostgreSQL\n\nПопробуй /help, чтобы узнать доступыне функции!")
+                     "\n\Написан на Python, дни рождения хранятся в PostgreSQL\n\nПопробуй /help, чтобы узнать доступные функции!")
 
 
 @bot.message_handler(commands=['check_birth'])
