@@ -40,7 +40,7 @@ def help(message):
 @bot.message_handler(commands=['create_new_member'])
 def create_new_member(message):
     # ToDo валидация сообщения на формат данных
-    new_member_adding = bot.send_message(message.chat.id, "Введите сообщение формата:\n*Имя*\n*01.05.2021*")
+    new_member_adding = bot.send_message(message.chat.id, "Введите сообщение формата:\n*Имя*\n*Месяц на английском* *день* *год*")
     bot.register_next_step_handler(new_member_adding, step_message)
 
 
@@ -50,7 +50,7 @@ def step_message(message):
     list = str(userInput).split("\n")
     set_members_for_chat(message.chat.id, userInput)
     bot.send_message(message.chat.id,
-                     f"Вы зарегистрировали пользователя с параметрами:\n Имя: {list[0]}\nДата: {list[1]}")
+                     f"Вы зарегистрировали пользователя с параметрами:\nИмя: {list[0]}\nДата: {list[1]}")
 
 
 bot.infinity_polling()

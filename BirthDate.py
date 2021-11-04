@@ -22,7 +22,6 @@ def get_birth_from_db(chat_id):
     list_of_birth = []
     for member in data:
         tmp = str(member[0]).split("\n")
-        # tmp[1] = parser.parse(tmp[1])
         tmp[1] = time.strptime(tmp[1], "%d %B %Y")
         list_of_birth.append(tmp)
 
@@ -33,22 +32,23 @@ def get_birth_from_db(chat_id):
 today = datetime.datetime.now()
 
 
-def get_message_birth():
+def get_message_birth(chat_id):
+    list_of_birth = get_birth_from_db(chat_id)
     message_string = ""
     check_birth_list = []
     for dates in list_of_birth:
         # timestamp = (dates[1].month - today.month) + (dates[1].day - today.day)
-        if today.month == dates[1].month:
-            timestamp = dates[1].day - today.day
+        if today.month == dates[1].tm_mon:
+            timestamp = dates[1].tm_day - today.day
             check_birth_list.append([timestamp, dates])
 
     for actual_birth in sorted(check_birth_list, key=sort_actual, reverse=True):
         if actual_birth[0] == 0:
             message_string += f"\nСегодня день рождения у {actual_birth[1][0]}!!!\nЕму {today.year - actual_birth[1][1].year}!\n\n"
         elif actual_birth[0] in range(1, 31):
-            message_string += f"{actual_birth[1][0]} через {actual_birth[0]} дней ({actual_birth[1][1].day} {map_month(actual_birth[1][1].month)}) \n"
+            message_string += f"{actual_birth[1][0]} через {actual_birth[0]} дней ({actual_birth[1][1].tm_mday} {map_month(actual_birth[1][1].tm_mon)}) \n"
         elif actual_birth[0] in range(-31, 0):
-            message_string += f"{actual_birth[1][0]} был {actual_birth[0] * (-1)} дней назад ({actual_birth[1][1].day} {map_month(actual_birth[1][1].month)})\n"
+            message_string += f"{actual_birth[1][0]} был {actual_birth[0] * (-1)} дней назад ({actual_birth[1][1].tm_mday} {map_month(actual_birth[1][1].tm_mon)})\n"
     return message_string
 
 
