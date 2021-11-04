@@ -23,7 +23,7 @@ def start_message(message):
 
 @bot.message_handler(commands=['check_birth'])
 def birth_message(message):
-    bot.send_message(message.chat.id, f"Дни рождения в этом месяце: \n \n{BirthDate.get_message_birth()}")
+    bot.send_message(message.chat.id, f"Дни рождения в этом месяце: \n \n{BirthDate.get_message_birth(message.chat.id)}")
 
 
 @bot.message_handler(commands=['all'])
