@@ -39,12 +39,12 @@ def get_message_birth(chat_id):
     for dates in list_of_birth:
         # timestamp = (dates[1].month - today.month) + (dates[1].day - today.day)
         if today.month == dates[1].tm_mon:
-            timestamp = dates[1].tm_day - today.day
+            timestamp = dates[1].tm_mday - today.day
             check_birth_list.append([timestamp, dates])
 
     for actual_birth in sorted(check_birth_list, key=sort_actual, reverse=True):
         if actual_birth[0] == 0:
-            message_string += f"\nСегодня день рождения у {actual_birth[1][0]}!!!\nЕму {today.year - actual_birth[1][1].year}!\n\n"
+            message_string += f"\nСегодня день рождения у {actual_birth[1][0]}!!!\nЕму {today.year - actual_birth[1][1].tm_year}!\n\n"
         elif actual_birth[0] in range(1, 31):
             message_string += f"{actual_birth[1][0]} через {actual_birth[0]} дней ({actual_birth[1][1].tm_mday} {map_month(actual_birth[1][1].tm_mon)}) \n"
         elif actual_birth[0] in range(-31, 0):
