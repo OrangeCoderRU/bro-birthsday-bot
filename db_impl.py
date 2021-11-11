@@ -69,3 +69,11 @@ def delete_member_from_db(chat_id, name):
     cursor[0].execute(query)
     cursor[0].close()
     close_conn(cursor[0], cursor[1])
+
+
+def update_notified():
+    query = f"UPDATE UPDATES SET notified=true WHERE notified != true"
+    cursor = conn()
+    cursor[0].execute(query)
+    cursor[0].close()
+    close_conn(cursor[0], cursor[1])

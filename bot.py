@@ -1,7 +1,7 @@
 import BirthDate
 from settings import TOKEN
 import telebot
-from db_impl import set_members_for_chat, get_all_chat_id, get_changelog, delete_member_from_db
+from db_impl import set_members_for_chat, get_all_chat_id, get_changelog, delete_member_from_db, update_notified
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -31,7 +31,7 @@ def help(message):
     bot.send_message(message.chat.id,
                      "Доступные команды: \n \n/all - все дни рождения\n/check_birth - Дни рождения текущего месяца\n"
                      "/create_new_member - регистрация будущего именинника!\n/help - помощь\n/start - summary бота и Changelog"
-                     "\n/delete_member - удаление дня пользователя")
+                     "\n/delete_member - удаление пользователя")
 
 
 @bot.message_handler(commands=['create_new_member'])
@@ -75,5 +75,7 @@ if __name__ == "__main__":
     if len(changelog) != 0:
         for chat_id in list_chat_id:
             bot.send_message(chat_id=chat_id[0], text=f'Вышло обновление:\n\n{changelog[0][0]}')
+
+    update_notified()
 
 bot.infinity_polling()
