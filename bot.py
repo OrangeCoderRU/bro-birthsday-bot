@@ -1,7 +1,7 @@
 import BirthDate
 from settings import TOKEN
 import telebot
-from db_impl import set_members_for_chat
+from db_impl import set_members_for_chat, get_all_chat_id, get_changelog, delete_member_from_db
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -30,7 +30,8 @@ def all_birth(message):
 def help(message):
     bot.send_message(message.chat.id,
                      "Доступные команды: \n \n/all - все дни рождения\n/check_birth - Дни рождения текущего месяца\n"
-                     "/create_new_member - регистрация будущего именинника!\n/help - помощь\n/start - summary бота и Changelog")
+                     "/create_new_member - регистрация будущего именинника!\n/help - помощь\n/start - summary бота и Changelog"
+                     "\n/delete_member - удаление дня пользователя")
 
 
 @bot.message_handler(commands=['create_new_member'])
@@ -38,11 +39,20 @@ def create_new_member(message):
     # ToDo валидация сообщения на формат данных
     new_member_adding = bot.send_message(message.chat.id,
                                          "Ответье на это сообщение форматом:\n*Имя*\n*день* *Месяц на английском* *год*")
-    bot.register_for_reply(new_member_adding, step_message)
+    bot.register_for_reply(new_member_adding, step_message_for_adding)
     # bot.register_next_step_handler(new_member_adding, step_message)
 
 
-def step_message(message):
+@bot.message_handler(commands=['delete_member'])
+def delete_member(message):
+    member_deleting = bot.send_message(
+        message.chat.id, "Ответьте на это сообщение именем человека, которого вы хотите удалить, "
+                         "ровно также как оно указано в команде /all")
+
+    bot.register_for_reply(member_deleting, step_message_for_deleting)
+
+
+def step_message_for_adding(message):
     cid = message.chat.id
     userInput = message.text
     list = str(userInput).split("\n")
@@ -50,5 +60,20 @@ def step_message(message):
     bot.send_message(message.chat.id,
                      f"Вы зарегистрировали пользователя с параметрами:\nИмя: {list[0]}\nДата: {list[1]}")
 
+
+def step_message_for_deleting(message):
+    userInput = message.text
+    list = str(userInput).split("\n")
+    delete_member_from_db(message.chat.id, userInput)
+    bot.send_message(message.chat.id,
+                     f"Вы удалили пользователя с именем {list[0]}, если он существовал, проверить снова - /all")
+
+
+if __name__ == "__main__":
+    list_chat_id = get_all_chat_id()
+    changelog = get_changelog()
+    if len(changelog) != 0:
+        for chat_id in list_chat_id:
+            bot.send_message(chat_id=chat_id[0], text=f'Вышло обновление:\n\n{changelog[0][0]}')
 
 bot.infinity_polling()
