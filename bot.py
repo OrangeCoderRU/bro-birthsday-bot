@@ -1,7 +1,13 @@
+import datetime
+
 import BirthDate
 from settings import TOKEN
 import telebot
-from db_impl import set_members_for_chat, get_all_chat_id, get_changelog, delete_member_from_db, update_notified
+import schedule
+from db_impl import set_members_for_chat, get_all_chat_id, get_changelog, \
+    delete_member_from_db, update_notified
+from alert_sheduler import schedule_checker
+from threading import Thread
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -69,6 +75,17 @@ def step_message_for_deleting(message):
                      f"Вы удалили пользователя с именем {list[0]}, если он существовал, проверить снова - /all")
 
 
+def alerting_about_birthday():
+    actual_birth = BirthDate.get_today_birth()
+    today = datetime.datetime.now()
+    if len(actual_birth) != 0:
+        for birth in actual_birth:
+            return bot.send_message(chat_id=birth[1],
+                                    text=f"Сегодня день рождения у {birth[0][0]}, поздравляем!\nЕму/ей {today.year - birth[0][1].tm_year}")
+    else:
+        return None
+
+
 if __name__ == "__main__":
     list_chat_id = get_all_chat_id()
     changelog = get_changelog()
@@ -77,5 +94,8 @@ if __name__ == "__main__":
             bot.send_message(chat_id=chat_id[0], text=f'Вышло обновление:\n\n{changelog[0][0]}')
 
     update_notified()
+
+    schedule.every().day.at("07:00").do(alerting_about_birthday)
+    Thread(target=schedule_checker).start()
 
 bot.infinity_polling()

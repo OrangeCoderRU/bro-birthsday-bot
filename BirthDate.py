@@ -1,6 +1,6 @@
 from utils import sort_actual, to_up_date, map_month
 import datetime
-from db_impl import get_members_for_chat
+from db_impl import get_members_for_chat, get_members_and_chats_id
 from dateutil import parser
 import time
 
@@ -14,7 +14,18 @@ def get_birth_from_db(chat_id):
         tmp[1] = time.strptime(tmp[1], "%d %B %Y")
         list_of_birth.append(tmp)
 
-    print(list_of_birth)
+    return list_of_birth
+
+
+def get_birth_and_chat_from_db():
+    data = get_members_and_chats_id()
+    # members = str(data).split("\n")
+    list_of_birth = []
+    for member in data:
+        tmp = str(member[0]).split("\n")
+        tmp[1] = time.strptime(tmp[1], "%d %B %Y")
+        list_of_birth.append([tmp, member[1]])
+
     return list_of_birth
 
 
@@ -53,3 +64,12 @@ def get_all_birth(chat_id):
         i += 1
 
     return message_string
+
+
+def get_today_birth():
+    list_of_actual_birth = []
+    for date in get_birth_and_chat_from_db():
+        if today.month == date[0][1].tm_mon and today.day == date[0][1].tm_mday:
+            list_of_actual_birth.append(date)
+
+    return list_of_actual_birth

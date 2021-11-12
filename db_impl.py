@@ -35,6 +35,16 @@ def get_members_for_chat(chat_id):
     return snapshot
 
 
+def get_members_and_chats_id():
+    query = f"SELECT snapshot, chat_id FROM DATA"
+    cursor = conn()
+    cursor[0].execute(query)
+    data = cursor[0].fetchall()
+    cursor[0].close()
+    close_conn(cursor[0], cursor[1])
+    return data
+
+
 def set_members_for_chat(chat_id, snapshot):
     query = f"INSERT INTO DATA (snapshot, chat_id) VALUES('{snapshot}', {chat_id})"
     cursor = conn()
