@@ -9,6 +9,7 @@ from db_impl import set_members_for_chat, get_all_chat_id, get_changelog, \
 from alert_sheduler import schedule_checker
 from threading import Thread
 import logging
+from utils import map_month
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -26,8 +27,13 @@ def start_message(message):
 
 @bot.message_handler(commands=['check_birth'])
 def birth_message(message):
-    bot.send_message(message.chat.id,
-                     f"Дни рождения в этом месяце: \n \n{BirthDate.get_message_birth(message.chat.id)}")
+    month_birth = BirthDate.get_message_birth(message.chat.id)
+    today = datetime.datetime.now()
+    if month_birth != "":
+        bot.send_message(message.chat.id,
+                         f"Дни рождения в этом месяце: \n \n{BirthDate.get_message_birth(month_birth)}")
+    else:
+        bot.send_message(message.chat.id, f"Дней рождений {map_month(today.month)} не найдено")
 
 
 @bot.message_handler(commands=['all'])
