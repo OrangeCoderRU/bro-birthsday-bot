@@ -8,6 +8,7 @@ from db_impl import set_members_for_chat, get_all_chat_id, get_changelog, \
     delete_member_from_db, update_notified
 from alert_sheduler import schedule_checker
 from threading import Thread
+import logging
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -78,6 +79,7 @@ def step_message_for_deleting(message):
 def alerting_about_birthday():
     actual_birth = BirthDate.get_today_birth()
     today = datetime.datetime.now()
+    logging.info("Произведен поиск актуальных дней рождения поздравления")
     if len(actual_birth) != 0:
         for birth in actual_birth:
             return bot.send_message(chat_id=birth[1],
@@ -87,6 +89,7 @@ def alerting_about_birthday():
 
 
 if __name__ == "__main__":
+    logging.info("Приложение успешно стартануло")
     list_chat_id = get_all_chat_id()
     changelog = get_changelog()
     if len(changelog) != 0:

@@ -4,6 +4,7 @@ import psycopg2
 from psycopg2 import Error
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from settings import DATABASE_URL
+import logging
 
 
 def conn():
@@ -11,9 +12,10 @@ def conn():
         connection = psycopg2.connect(DATABASE_URL, sslmode='require')
         connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         cursor = connection.cursor()
+        logging.info("Открыто соедениние с PostgeSQL")
     except (Exception, Error) as error:
         cursor = None
-        print("Ошибка при работе с PostgreSQL", error)
+        logging.error(f"Ошибка при работе с PostgreSQL {error}")
         raise Error
 
     return cursor, connection
@@ -22,7 +24,7 @@ def conn():
 def close_conn(cursor, connection):
     cursor.close()
     connection.close()
-    print("Соединение с PostgreSQL закрыто")
+    logging.info("Соединение с PostgreSQL закрыто")
 
 
 def get_members_for_chat(chat_id):
