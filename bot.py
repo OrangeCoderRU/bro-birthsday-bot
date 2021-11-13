@@ -92,7 +92,6 @@ def alerting_about_birthday():
 
 if __name__ == "__main__":
     logger.info("Приложение успешно стартануло")
-    logger.info(datetime.datetime.now())
     list_chat_id = get_all_chat_id()
     changelog = get_changelog()
     if len(changelog) != 0:
@@ -101,7 +100,7 @@ if __name__ == "__main__":
 
     update_notified()
 
-    schedule.every().day.at("07:00").do(alerting_about_birthday)
+    schedule.every().day.at("10:00").do(alerting_about_birthday)
     Thread(target=schedule_checker).start()
 
 bot.infinity_polling()
