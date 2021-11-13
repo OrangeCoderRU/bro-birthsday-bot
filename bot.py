@@ -12,6 +12,8 @@ import logging
 
 bot = telebot.TeleBot(TOKEN)
 
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)s %(levelname)s:%(message)s')
+logger = logging.getLogger(__name__)
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -79,7 +81,7 @@ def step_message_for_deleting(message):
 def alerting_about_birthday():
     actual_birth = BirthDate.get_today_birth()
     today = datetime.datetime.now()
-    logging.info("Произведен поиск актуальных дней рождения поздравления")
+    logger.info("Произведен поиск актуальных дней рождения поздравления")
     if len(actual_birth) != 0:
         for birth in actual_birth:
             return bot.send_message(chat_id=birth[1],
@@ -89,7 +91,7 @@ def alerting_about_birthday():
 
 
 if __name__ == "__main__":
-    logging.info("Приложение успешно стартануло")
+    logger.info("Приложение успешно стартануло")
     list_chat_id = get_all_chat_id()
     changelog = get_changelog()
     if len(changelog) != 0:

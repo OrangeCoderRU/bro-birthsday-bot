@@ -6,16 +6,19 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from settings import DATABASE_URL
 import logging
 
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)s %(levelname)s:%(message)s')
+logger = logging.getLogger(__name__)
+
 
 def conn():
     try:
         connection = psycopg2.connect(DATABASE_URL, sslmode='require')
         connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         cursor = connection.cursor()
-        logging.info("Открыто соедениние с PostgeSQL")
+        logger.info("Открыто соедениние с PostgeSQL")
     except (Exception, Error) as error:
         cursor = None
-        logging.error(f"Ошибка при работе с PostgreSQL {error}")
+        logger.error(f"Ошибка при работе с PostgreSQL {error}")
         raise Error
 
     return cursor, connection
@@ -24,7 +27,7 @@ def conn():
 def close_conn(cursor, connection):
     cursor.close()
     connection.close()
-    logging.info("Соединение с PostgreSQL закрыто")
+    logger.info("Соединение с PostgreSQL закрыто")
 
 
 def get_members_for_chat(chat_id):
