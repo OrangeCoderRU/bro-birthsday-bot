@@ -1,6 +1,6 @@
 import datetime
 
-import BirthDate
+from BirthDate import get_message_birth, get_today_birth, get_all_birth
 from settings import TOKEN
 import telebot
 import schedule
@@ -27,18 +27,18 @@ def start_message(message):
 
 @bot.message_handler(commands=['check_birth'])
 def birth_message(message):
-    month_birth = BirthDate.get_message_birth(message.chat.id)
+    month_birth = get_message_birth(message.chat.id)
     today = datetime.datetime.now()
     if month_birth != "":
         bot.send_message(message.chat.id,
-                         f"Дни рождения в этом месяце: \n \n{BirthDate.get_message_birth(month_birth)}")
+                         f"Дни рождения в этом месяце: \n \n{month_birth}")
     else:
         bot.send_message(message.chat.id, f"Дней рождений {map_month(today.month)} не найдено")
 
 
 @bot.message_handler(commands=['all'])
 def all_birth(message):
-    bot.send_message(message.chat.id, BirthDate.get_all_birth(message.chat.id))
+    bot.send_message(message.chat.id, get_all_birth(message.chat.id))
 
 
 @bot.message_handler(commands=['help'])
@@ -85,7 +85,7 @@ def step_message_for_deleting(message):
 
 
 def alerting_about_birthday():
-    actual_birth = BirthDate.get_today_birth()
+    actual_birth = get_today_birth()
     today = datetime.datetime.now()
     logger.info("Произведен поиск актуальных дней рождения поздравления")
     if len(actual_birth) != 0:

@@ -3,11 +3,14 @@ import datetime
 from db_impl import get_members_for_chat, get_members_and_chats_id
 from dateutil import parser
 import time
+import logging
+
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)s %(levelname)s:%(message)s')
+logger = logging.getLogger(__name__)
 
 
 def get_birth_from_db(chat_id):
     data = get_members_for_chat(chat_id)
-    # members = str(data).split("\n")
     list_of_birth = []
     for member in data:
         tmp = str(member[0]).split("\n")
