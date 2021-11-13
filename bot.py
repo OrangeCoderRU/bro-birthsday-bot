@@ -17,7 +17,6 @@ logger = logging.getLogger(__name__)
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
-    logger.info(datetime.datetime.now())
     bot.send_message(message.chat.id,
                      "Вас приветствует Bro Birthday Bot - бот хранящий инфу о днях рождения ваших бро"
                      "\n\nНаписан на Python, дни рождения хранятся в PostgreSQL для каждого чата отдельно основываясь на связи с сhat_id (подробнее в API Telegram)"
@@ -93,6 +92,7 @@ def alerting_about_birthday():
 
 if __name__ == "__main__":
     logger.info("Приложение успешно стартануло")
+    logger.info(datetime.datetime.now())
     list_chat_id = get_all_chat_id()
     changelog = get_changelog()
     if len(changelog) != 0:
