@@ -106,7 +106,7 @@ if __name__ == "__main__":
 
     update_notified()
 
-    schedule.every().day.at("04:00").do(alerting_about_birthday)
+    schedule.every().day.at("07:00").do(alerting_about_birthday)
     Thread(target=schedule_checker).start()
 
 bot.infinity_polling()
