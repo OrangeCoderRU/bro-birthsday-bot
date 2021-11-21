@@ -1,15 +1,15 @@
 import datetime
 
-from scripts.BirthDate import get_message_birth, get_today_birth, get_all_birth
+from BirthDate import get_message_birth, get_today_birth, get_all_birth
 from settings import TOKEN
 import telebot
 import schedule
-from db.db_impl import set_members_for_chat, get_all_chat_id, get_changelog, \
+from db_impl import set_members_for_chat, get_all_chat_id, get_changelog, \
     delete_member_from_db, update_notified
-from scripts.alert_sheduler import schedule_checker
+from alert_sheduler import schedule_checker
 from threading import Thread
 import logging
-from helpers.utils import map_month
+from utils import map_month
 
 bot = telebot.TeleBot(TOKEN)
 
