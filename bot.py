@@ -9,12 +9,13 @@ from db.db_impl import set_members_for_chat, get_all_chat_id, get_changelog, \
 from scripts.alert_sheduler import schedule_checker
 from threading import Thread
 import logging
-from helpers.utils import map_month
+from helpers.utils import map_month, validate_date, validate_all_input
 
 bot = telebot.TeleBot(TOKEN)
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)s %(levelname)s:%(message)s')
 logger = logging.getLogger(__name__)
+
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -71,9 +72,17 @@ def step_message_for_adding(message):
     cid = message.chat.id
     userInput = message.text
     list = str(userInput).split("\n")
-    set_members_for_chat(message.chat.id, userInput)
-    bot.send_message(message.chat.id,
-                     f"Вы зарегистрировали пользователя с параметрами:\nИмя: {list[0]}\nДата: {list[1]}")
+    if validate_all_input(userInput) == "Ok":
+        if validate_date(list[1]) != "Error":
+            set_members_for_chat(message.chat.id, userInput)
+            bot.send_message(message.chat.id,
+                             f"Вы зарегистрировали пользователя с параметрами:\nИмя: {list[0]}\nДата: {list[1]}")
+        else:
+            bot.send_message(message.chat.id,
+                             "Кажется формат даты неправильный, попробуйте ещё раз\n\nДата должна быть такого вида:\n\n03 September 1998")
+    else:
+        bot.send_message(message.chat.id,
+                         "Кажется вы ответили не по формату, попробуйте ещё раз\n\nНапример:\n\nМакс\n03 September 1998")
 
 
 def step_message_for_deleting(message):

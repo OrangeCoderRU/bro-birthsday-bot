@@ -1,8 +1,8 @@
 from helpers.utils import sort_actual, to_up_date, map_month
 import datetime
 from db.db_impl import get_members_for_chat, get_members_and_chats_id
-import time
 import logging
+from helpers.utils import validate_date
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)s %(levelname)s:%(message)s')
 logger = logging.getLogger(__name__)
@@ -13,7 +13,7 @@ def get_birth_from_db(chat_id):
     list_of_birth = []
     for member in data:
         tmp = str(member[0]).split("\n")
-        tmp[1] = time.strptime(tmp[1], "%d %B %Y")
+        tmp[1] = validate_date(tmp[1])
         list_of_birth.append(tmp)
 
     return list_of_birth
@@ -21,11 +21,10 @@ def get_birth_from_db(chat_id):
 
 def get_birth_and_chat_from_db():
     data = get_members_and_chats_id()
-    # members = str(data).split("\n")
     list_of_birth = []
     for member in data:
         tmp = str(member[0]).split("\n")
-        tmp[1] = time.strptime(tmp[1], "%d %B %Y")
+        tmp[1] = validate_date(tmp[1])
         list_of_birth.append([tmp, member[1]])
 
     return list_of_birth
@@ -39,7 +38,6 @@ def get_message_birth(chat_id):
     message_string = ""
     check_birth_list = []
     for dates in list_of_birth:
-        # timestamp = (dates[1].month - today.month) + (dates[1].day - today.day)
         if today.month == dates[1].tm_mon:
             timestamp = dates[1].tm_mday - today.day
             check_birth_list.append([timestamp, dates])

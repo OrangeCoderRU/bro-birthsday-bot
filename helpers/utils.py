@@ -1,4 +1,5 @@
 import datetime
+import time
 
 today = datetime.datetime.now()
 
@@ -17,3 +18,18 @@ def map_month(month_num):
         "июля", "августа", "сентября", "октября", "ноября", "декабря"
     ]
     return list_month[month_num - 1]
+
+
+def validate_date(date):
+    try:
+        value = time.strptime(date, "%d %B %Y")
+        return value
+    except:
+        return "Error"
+
+
+def validate_all_input(input: str):
+    if input.count('\n') != 1:
+        return "Error"
+    else:
+        return "Ok"
