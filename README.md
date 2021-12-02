@@ -2,7 +2,7 @@
 
 Бот для телеграм-чатов хранящий дни рождения и уведомляющий о них.
 
-[t.me/Birthday_alerting_bot](t.me/Birthday_alerting_bot)
+[t.me/Birthday_alerting_bot](https://t.me/Birthday_alerting_bot)
 
 
 ### Стек
