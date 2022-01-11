@@ -54,13 +54,10 @@ def get_message_birth(chat_id):
 
 def get_all_birth(chat_id):
     list_of_birth = get_birth_from_db(chat_id)
-    message_string = "Все др ваших братишек:\n"
+    message_string = "Все др ваших братишек:\n\n"
     i = 0
     for dates in sorted(list_of_birth, key=to_up_date, reverse=True):
-        if i == 0:
-            message_string += f"\nБлижайший др:\n{dates[0]} - {dates[1].tm_mday} {map_month(dates[1].tm_mon)}\n\n"
-        else:
-            message_string += f"{dates[0]} - {dates[1].tm_mday} {map_month(dates[1].tm_mon)}\n"
+        message_string += f"{dates[0]} - {dates[1].tm_mday} {map_month(dates[1].tm_mon)}\n"
         i += 1
 
     return message_string
