@@ -31,7 +31,7 @@ def get_birth_and_chat_from_db():
 
 
 today = datetime.datetime.now()
-
+logger.info(today)
 
 def get_message_birth(chat_id):
     list_of_birth = get_birth_from_db(chat_id)
