@@ -99,7 +99,7 @@ def alerting_about_birthday():
     logger.info("Произведен поиск актуальных дней рождения поздравления")
     if len(actual_birth) != 0:
         for birth in actual_birth:
-            return bot.send_message(chat_id=birth[1],
+            bot.send_message(chat_id=birth[1],
                                     text=f"Сегодня день рождения у {birth[0][0]}, поздравляем!\nЕму/ей {today.year - birth[0][1].tm_year}")
     else:
         return None
