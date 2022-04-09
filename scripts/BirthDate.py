@@ -66,7 +66,7 @@ def get_all_birth(chat_id):
 def get_today_birth():
     list_of_actual_birth = []
     for date in get_birth_and_chat_from_db():
-        if today.month == date[0][1].tm_mon and today.day - 1 == date[0][1].tm_mday:
+        if today.month == date[0][1].tm_mon and today.day + 1 == date[0][1].tm_mday:
             list_of_actual_birth.append(date)
 
     return list_of_actual_birth
